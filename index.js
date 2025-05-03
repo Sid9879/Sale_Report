@@ -3,10 +3,11 @@ const app = express();
 const cors = require('cors');
 const port = 8090;
 const cookieParser = require("cookie-parser");
+const allowedOrigin = process.env.CORS_ORIGIN || "https://sale-report.onrender.com"; 
 
 app.use(express.json());
 app.use(cors({
-    origin:process.env.VITE_API_URL,
+    origin:allowedOrigin,
     credentials: true // 🔥 Allow credentials (cookies)
   }));
 
