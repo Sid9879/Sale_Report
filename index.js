@@ -8,7 +8,7 @@ app.use(cors({
   origin: function (origin, callback) {
     const allowedOrigins = [
       'http://localhost:5173',
-      'https://your-frontend-url.vercel.app', 
+      'https://sale-report.onrender.com', 
     ];
     
     if (!origin || allowedOrigins.includes(origin)) {
