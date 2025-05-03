@@ -54,7 +54,7 @@ const loginUser = async(req,res)=>{
         res.cookie("token", token, {
             httpOnly: true, // prevents JS access on client
             secure: process.env.NODE_ENV === "production", // use HTTPS in production
-            sameSite: "Strict", // protects against CSRF
+            sameSite: "Lax", // protects against CSRF
             maxAge: 3600000, // 1 hour in milliseconds
             // maxAge: 60*1000, 
           });
