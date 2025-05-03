@@ -3,13 +3,22 @@ const app = express();
 const cors = require('cors');
 const port = 8090;
 const cookieParser = require("cookie-parser");
-const allowedOrigin = process.env.CORS_ORIGIN || "https://sale-report.onrender.com"; 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://your-frontend-url.vercel.app'
+];
 
 app.use(express.json());
 app.use(cors({
-    origin:allowedOrigin,
-    credentials: true // 🔥 Allow credentials (cookies)
-  }));
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}));
 
 const db = require('./db');
 db()

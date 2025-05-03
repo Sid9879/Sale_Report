@@ -50,7 +50,7 @@ const loginUser = async(req,res)=>{
         if(!matchPassword){
             return res.status(400).json({msg:"Invalid password",success:false});
         }
-        let token = jwt.sign({_id:user._id,email:user.email,isAdmin:user.isAdmin},JWT_SCECRET,{expiresIn:"1hr"})
+        let token = jwt.sign({_id:user._id,email:user.email,isAdmin:user.isAdmin},process.env.JWT_SCECRET,{expiresIn:"1hr"})
         res.cookie("token", token, {
             httpOnly: true, // prevents JS access on client
             secure: process.env.NODE_ENV === "production", // use HTTPS in production
