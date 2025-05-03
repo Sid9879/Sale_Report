@@ -3,22 +3,26 @@ const app = express();
 const cors = require('cors');
 const port = 8090;
 const cookieParser = require("cookie-parser");
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://your-frontend-url.vercel.app'
-];
+// const allowedOrigins = [
+//   'http://localhost:5173',
+//   'https://your-frontend-url.vercel.app'
+// ];
 
 app.use(express.json());
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true,
+// }));
+
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
   credentials: true,
-}));
+}))
 
 const db = require('./db');
 db()
