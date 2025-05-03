@@ -10,6 +10,7 @@ app.use(cors({
       'http://localhost:5173',
       'https://sale-report.onrender.com', 
     ];
+console.log("Origin received:", origin);
     
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
