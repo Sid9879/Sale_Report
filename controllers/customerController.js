@@ -44,10 +44,10 @@ const updateCustomer = async(req,res)=>{
         if (!users || users.role === 'user') {
           return res.status(403).json({ msg: "Access denied", success: false });
         }
-        const user = await User.findById(userId);
-        if(!user || !user.isAdmin){
-            return res.status(401).json({msg:"You are not authorized to update this customer",success:false})
-        }
+        // const user = await User.findById(userId);
+        // if(!user || !user.isAdmin){
+        //     return res.status(401).json({msg:"You are not authorized to update this customer",success:false})
+        // }
         let updateCustomers = await Customer.findByIdAndUpdate(customerId,{$set:{email,phoneNumber,address,name}},{new:true}) 
         res.status(200).json({msg:"Customer Updated",success:true,updateCustomers});
      } catch (error) {
