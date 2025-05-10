@@ -41,7 +41,8 @@ const productRouter = require('./routes/productController');
 app.use('/product',productRouter)
 const salesRouter = require('./routes/salesRoutes');
 app.use('/sales', salesRouter);
-
+const billing = require('./routes/billlingRouter');
+app.use('/bill',billing);
 app.listen(port,(req,res)=>{
     console.log(`Server is running on port ${port}`);
 })
