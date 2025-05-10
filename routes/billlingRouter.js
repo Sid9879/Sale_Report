@@ -4,8 +4,8 @@ const {addBilling, getAlLBill, deleteProducts, updateBilling} = require('../cont
 const router = express.Router();
 
 router.post('/addbillings',checkToken,addBilling);
-router.post('/updatebill',checkToken,updateBilling);
-router.post('/deletebill',checkToken,deleteProducts);
-router.post('/getAll',checkToken,getAlLBill);
+router.put('/updatebill',checkToken,updateBilling);
+router.delete('/deletebill',checkToken,deleteProducts);
+router.get('/getAll',checkToken,getAlLBill);
 
 module.exports = router
