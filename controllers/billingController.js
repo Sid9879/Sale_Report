@@ -65,7 +65,7 @@ const getAlLBill = async(req,res)=>{
      if (getBill.length === 0) {
       return res.status(404).json({ message: "No Billing found", success: false });
     }
-    res.status(200).json({msg:"Billings Fetched",success:true,getAlLBill})
+    res.status(200).json({msg:"Billings Fetched",success:true,getBill})
    } catch (error) {
     res.status(500).json({msg:"Error in fetching data",success:false,error:error.message})
    }
