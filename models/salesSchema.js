@@ -48,7 +48,7 @@ const saleItemSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: () => new Date(new Date().setHours(0, 0, 0, 0)) // This saves only the DATE (not time)
+    default: () => new Date(new Date().setHours(0, 0, 0, 0))
   }
   
 });

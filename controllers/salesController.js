@@ -88,8 +88,8 @@ today.setHours(0, 0, 0, 0);
 
 
 const reduceQuantity = async (req, res) => {
-  let  quantity = req.body.quantity;
-  quantity = parseInt(quantity) || 1;
+    let quantity = req.body.quantity;
+    quantity = parseInt(quantity) || 1;
     const saleId = req.params.saleId;
     const productId = req.params.productId;
     try {
@@ -245,8 +245,6 @@ const reduceQuantity = async (req, res) => {
       res.status(500).json({ msg: "Error fetching today's sales", error: err.message });
     }
   };
-  
-
 module.exports = {
     createSale,
     reduceQuantity,
