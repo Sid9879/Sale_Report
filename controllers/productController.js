@@ -78,7 +78,7 @@ const addProduct = async (req, res) => {
 
 const getAllProduct = async(req,res)=>{
     try{
-        const getAll = await Product.find();
+        const getAll = await Product.find().sort({createdAt:-1});
         res.status(200).json({msg:"Product fetched successfully",success:true, getAll})
   }
     catch(error){
