@@ -1,8 +1,14 @@
 const Billing = require('../models/billingSchema')
+const User = require('../models/userSchema')
 
 const addBilling = async(req,res)=>{
+  const admin = req.user._id;
   const {companyName,title,invoiceNo,invoiceDate,dueDate,productDescription,hsnCode,oty,packageSize,unitPrice,gst,totalAmount} = req.body;
   try {
+    const user = await User.findById(admin)
+    if(!user || !user.isAdmin){
+      return res.status(400).json({message:'You are not an admin',success:false})
+    }
      const existingBilling = await Billing.findOne({invoiceNo});
    if(existingBilling){
     return res.status(400).json({message:"Invoice No. already exists"})
