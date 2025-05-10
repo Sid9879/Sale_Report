@@ -147,7 +147,7 @@ const updateEmployee = async (req, res) => {
 const getEmployee = async(req,res)=>{
   const adminId = req.user._id
    try{
-   const admin = await User.findById(adminId);
+   const admin = await User.findById(adminId).sort({createdAt:-1});
    if(!admin ||!admin?.isAdmin){
     return res.status(401).json({msg:"Your are not admin",success:false})
    }
