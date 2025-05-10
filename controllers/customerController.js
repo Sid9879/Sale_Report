@@ -73,7 +73,7 @@ const deleteCustomer = async(req,res)=>{
 const getCustomer = async(req,res)=>{
     const userId = req.user._id
    try {
-    const user = await User.findById(userId)
+    const user = await User.findById(userId).sort({createdAt:-1})
     if(!user || !user.role ==='user'){
          return res.status(401).json({msg:"Access Denied",success:false})
     }
