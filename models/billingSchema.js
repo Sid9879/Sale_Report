@@ -38,6 +38,7 @@ const NewBilling = new mongoose.Schema({
     },
     packageSize:{
         type:String,
+        required:true
     },
     unitPrice:{
         type:Number,
