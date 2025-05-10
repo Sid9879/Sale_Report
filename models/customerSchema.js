@@ -38,6 +38,6 @@ const CustomeSchema = new mongoose.Schema({
     maxlength: [100, 'Address must be less than 50 characters long'],
     match: [/(\d{6})/, 'Address must contain a 6-digit pincode'],
       }
-})
+},{timestamps:true})
 
 module.exports = mongoose.model('customer',CustomeSchema);

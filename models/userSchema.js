@@ -53,6 +53,6 @@ const UserSchema = new mongoose.Schema({
       message: 'Phone number must contain only digits and be 10 digits long',
     },
   },
-})
+},{timestamps:true})
 
 module.exports = mongoose.model("user",UserSchema)
