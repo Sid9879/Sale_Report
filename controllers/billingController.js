@@ -56,7 +56,7 @@ const deleteProducts = async(req,res)=>{
 const getAlLBill = async(req,res)=>{
    try {
      const getBill = await Billing.find().sort({createdAt:-1});
-     if (!getBill || getBill.length === 0) {
+     if (getBill.length === 0) {
       return res.status(404).json({ message: "No Billing found", success: false });
     }
     res.status(200).json({msg:"Billings Fetched",success:true,getAlLBill})
