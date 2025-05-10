@@ -19,8 +19,11 @@ const NewBilling = new mongoose.Schema({
         required:true,
     },
     invoiceDate:{
-        type:Date,
-        required:true
+       type: Date,
+  default: () => {
+    const today = new Date();
+    return new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  }
     },
     dueDate:{
         type:Date,
