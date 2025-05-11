@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/addbillings',checkToken,addBilling);
 router.put('/updatebill/:_id',checkToken,updateBilling);
-router.delete('/deletebill',checkToken,deleteProducts);
+router.delete('/deletebill/:_id',checkToken,deleteProducts);
 router.get('/getAll',checkToken,getAlLBill);
 
 module.exports = router
