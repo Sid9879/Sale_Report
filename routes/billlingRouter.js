@@ -4,7 +4,7 @@ const {addBilling, getAlLBill, deleteProducts, updateBilling} = require('../cont
 const router = express.Router();
 
 router.post('/addbillings',checkToken,addBilling);
-router.put('/updatebill',checkToken,updateBilling);
+router.put('/updatebill/:_id',checkToken,updateBilling);
 router.delete('/deletebill',checkToken,deleteProducts);
 router.get('/getAll',checkToken,getAlLBill);
 
