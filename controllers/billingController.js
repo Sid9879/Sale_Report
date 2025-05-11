@@ -71,9 +71,23 @@ const getAlLBill = async(req,res)=>{
    }
 }
 
+const getSingle=async(req,res)=>{
+  const productId=req.params._id
+  try {
+    const getProduct = await Billing.findById(productId);
+    if(!getProduct){
+      return res.status(404).json({message:"No Billing found with this id"})
+    }
+    res.status(200).json({msg:"Billing Fetched",success:true,getProduct})
+  } catch (error) {
+    res.status(500).json({msg:"Error in fetching data",success:false,error:error.message});
+  }
+}
+
 module.exports ={ 
     addBilling,
     updateBilling,
     deleteProducts,
-    getAlLBill
+    getAlLBill,
+    getSingle
 }
