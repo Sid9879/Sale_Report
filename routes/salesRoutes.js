@@ -9,7 +9,7 @@ router.delete('/saleItem/:customerId', checktoken,deleteTodaySaleProducts);
 router.get('/sale/today/:customerId',checktoken, getTodayProducts);
 router.get('/saletoday' , getTodaySales);
 router.get('/saleAlltimes' ,getAllTimeSales);
-router.get('/saleTodayGet' ,checktoken,getAllTimeSales);
+router.get('/saleTodayGet' ,checktoken,getTodayProducts);
 
 
 module.exports = router;
