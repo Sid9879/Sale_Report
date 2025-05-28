@@ -245,13 +245,66 @@ const reduceQuantity = async (req, res) => {
       res.status(500).json({ msg: "Error fetching today's sales", error: err.message });
     }
   };
+
+ const getTodayProductSales = async (req, res) => {
+  try {
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const todayProductSales = await Sale.aggregate([
+      {
+        $unwind: "$products" // break array
+      },
+      {
+        $match: {
+          "products.date": { $gte: startOfDay, $lte: endOfDay }
+        }
+      },
+      {
+        $lookup: {
+          from: "customer", // adjust if your collection is named differently
+          localField: "customerId",
+          foreignField: "_id",
+          as: "customer"
+        }
+      },
+      {
+        $unwind: "$customer"
+      },
+      {
+        $project: {
+          _id: 1,
+          saleDate: "$date", // main sale date
+          customer: {
+            _id: "$customer._id",
+            name: "$customer.name"
+          },
+          product: "$products"
+        }
+      }
+    ]);
+
+    res.status(200).json({
+      msg: "Today's product sales fetched successfully",
+      sales: todayProductSales,
+      success: true
+    });
+  } catch (err) {
+    res.status(500).json({ msg: "Error fetching today's sales", error: err.message });
+  }
+};
+
 module.exports = {
     createSale,
     reduceQuantity,
     deleteTodaySaleProducts,
     getTodayProducts,
     getAllTimeSales,
-    getTodaySales
+    getTodaySales,
+    getTodayProductSales
 
 }
 
