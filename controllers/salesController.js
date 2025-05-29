@@ -246,56 +246,87 @@ const reduceQuantity = async (req, res) => {
     }
   };
 
- const getTodayProductSales = async (req, res) => {
-  try {
-    const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0);
+  const getTodayProductSales = async(req,res)=>{
+    try {
+      const startOfDay = new Date();
+      startOfDay.setHours(0, 0, 0, 0);
+  
+      const endOfDay = new Date();
+      endOfDay.setHours(23, 59, 59, 999);
 
-    const endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59, 999);
+      const sales = await Sale.find({
+        "products.date": { $gte: startOfDay, $lte: endOfDay },
+      }).populate("customerId");
 
-    const todayProductSales = await Sale.aggregate([
-      {
-        $unwind: "$products" // break array
-      },
-      {
-        $match: {
-          "products.date": { $gte: startOfDay, $lte: endOfDay }
-        }
-      },
-      {
-        $lookup: {
-          from: "customer", // adjust if your collection is named differently
-          localField: "customerId",
-          foreignField: "_id",
-          as: "customer"
-        }
-      },
-      {
-        $unwind: "$customer"
-      },
-      {
-        $project: {
-          _id: 1,
-          saleDate: "$date", // main sale date
-          customer: {
-            _id: "$customer._id",
-            name: "$customer.name"
-          },
-          product: "$products"
-        }
-      }
-    ]);
-
-    res.status(200).json({
-      msg: "Today's product sales fetched successfully",
-      sales: todayProductSales,
-      success: true
-    });
-  } catch (err) {
-    res.status(500).json({ msg: "Error fetching today's sales", error: err.message });
+      // let totalTodaySales = [];
+      //  sales.forEach((sale) => {
+      //   sale.products.forEach((product) => {
+      //     const productDate = new Date(product.date);
+      //     if (productDate >= startOfDay && productDate <= endOfDay) {
+      //       totalTodaySales = sales
+      //     }
+      //   });
+      // });
+      res.status(200).json({
+        msg: "sales fetched successfully",
+        sales,
+        success: true,
+      });
+    } catch (error) {
+      res.status(500).json({ msg: "Error fetching today's sales", error: err.message });
+    }
   }
-};
+
+//  const getTodayProductSales = async (req, res) => {
+//   try {
+//     const startOfDay = new Date();
+//     startOfDay.setHours(0, 0, 0, 0);
+
+//     const endOfDay = new Date();
+//     endOfDay.setHours(23, 59, 59, 999);
+
+//     const todayProductSales = await Sale.aggregate([
+//       {
+//         $unwind: "$products" // break array
+//       },
+//       {
+//         $match: {
+//           "products.date": { $gte: startOfDay, $lte: endOfDay }
+//         }
+//       },
+//       {
+//         $lookup: {
+//           from: "customers", // adjust if your collection is named differently
+//           localField: "customerId",
+//           foreignField: "_id",
+//           as: "customer"
+//         }
+//       },
+//       {
+//         $unwind: "$customer"
+//       },
+//       {
+//         $project: {
+//           _id: 1,
+//           saleDate: "$date", // main sale date
+//           customer: {
+//             _id: "$customer._id",
+//             name: "$customer.name"
+//           },
+//           product: "$products"
+//         }
+//       }
+//     ]);
+
+//     res.status(200).json({
+//       msg: "Today's product sales fetched successfully",
+//       sales: todayProductSales,
+//       success: true
+//     });
+//   } catch (err) {
+//     res.status(500).json({ msg: "Error fetching today's sales", error: err.message });
+//   }
+// };
 
 module.exports = {
     createSale,
