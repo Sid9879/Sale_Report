@@ -246,6 +246,8 @@ const reduceQuantity = async (req, res) => {
     }
   };
 
+
+  
   const getTodayProductSales = async(req,res)=>{
     try {
       const startOfDay = new Date();
@@ -258,18 +260,19 @@ const reduceQuantity = async (req, res) => {
         "products.date": { $gte: startOfDay, $lte: endOfDay },
       }).populate("customerId");
 
-      // let totalTodaySales = [];
-      //  sales.forEach((sale) => {
-      //   sale.products.forEach((product) => {
-      //     const productDate = new Date(product.date);
-      //     if (productDate >= startOfDay && productDate <= endOfDay) {
-      //       totalTodaySales = sales
-      //     }
-      //   });
-      // });
+      let totalTodaySales = 0;
+       sales.forEach((sale) => {
+        sale.products.forEach((product) => {
+          const productDate = new Date(product.date);
+          if (productDate >= startOfDay && productDate <= endOfDay) {
+            totalTodaySales += product.price * product.quantity;
+          }
+        });
+      });
       res.status(200).json({
         msg: "sales fetched successfully",
         sales,
+        totalTodaySales,
         success: true,
       });
     } catch (error) {
@@ -277,7 +280,7 @@ const reduceQuantity = async (req, res) => {
     }
   }
 
-//  const getTodayProductSales = async (req, res) => {
+
 //   try {
 //     const startOfDay = new Date();
 //     startOfDay.setHours(0, 0, 0, 0);
